@@ -5,6 +5,7 @@ export default function HomePage() {
   const [numbersExtractedList, setNumbersExtractedList] = useState([]);
   const [extractedNumber, setExtractedNumber] = useState(0);
   const nums = 90;
+  let [extractionInProgress, setExtractionInProgress] = useState(false);
 
   //* function for generate random number
   const generateRandomNumber = (min, max) => {
@@ -17,24 +18,42 @@ export default function HomePage() {
     return randomNumber;
   };
 
+  //* create array of numbers for print on screen
+  for (let i = 1; i <= nums; i++) {
+    numbersList.push(i);
+  }
+
   //* function for extraction number
   const extractionNumber = () => {
-    const newNumber = generateRandomNumber(1, nums);
-    setExtractedNumber(newNumber);
+    let randomInterval;
+    const tempDuration = 1500;
+    const intervalSpeed = 100;
+    setExtractionInProgress(true);
 
-    if (!numbersExtractedList.includes(newNumber)) {
-      setNumbersExtractedList([...numbersExtractedList, newNumber]);
-    }
+    randomInterval = setInterval(() => {
+      const tempNumber = generateRandomNumber(1, nums);
+      setExtractedNumber(tempNumber);
+    }, intervalSpeed);
+
+    setTimeout(() => {
+      clearInterval(randomInterval);
+      setExtractionInProgress(false);
+
+      let finalNumber;
+      finalNumber = generateRandomNumber(1, nums);
+
+      setExtractedNumber(finalNumber);
+      setNumbersExtractedList([...numbersExtractedList, finalNumber]);
+
+      console.log("Final Extracted Number:", finalNumber);
+    }, tempDuration);
   };
 
+  //* function for restart game
   const resetGame = () => {
     setNumbersExtractedList([]);
     setExtractedNumber(0);
   };
-
-  for (let i = 1; i <= nums; i++) {
-    numbersList.push(i);
-  }
 
   return (
     <main>
@@ -71,7 +90,9 @@ export default function HomePage() {
                 onClick={() => extractionNumber()}
                 className={
                   "btn btn-warning fw-bold extraction-btn" +
-                  (numbersExtractedList.length === nums ? " disabled" : "")
+                  (numbersExtractedList.length === nums || extractionInProgress
+                    ? " disabled"
+                    : "")
                 }
               >
                 Estrai
