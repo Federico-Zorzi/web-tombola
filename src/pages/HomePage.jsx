@@ -4,7 +4,7 @@ export default function HomePage() {
   const numbersList = [];
   const [numbersExtractedList, setNumbersExtractedList] = useState([]);
   const [extractedNumber, setExtractedNumber] = useState(0);
-  const nums = 20;
+  const nums = 90;
 
   //* function for generate random number
   const generateRandomNumber = (min, max) => {
@@ -18,15 +18,14 @@ export default function HomePage() {
   };
 
   //* function for extraction number
-  const extractionNumber = (min, max) => {
-    setExtractedNumber(generateRandomNumber(1, nums));
-    console.log("extractedNumber: " + extractedNumber);
+  const extractionNumber = () => {
+    const newNumber = generateRandomNumber(1, nums);
+    setExtractedNumber(newNumber);
 
-    if (!numbersExtractedList.includes(extractedNumber)) {
-      setNumbersExtractedList([...numbersExtractedList, extractedNumber]);
+    if (!numbersExtractedList.includes(newNumber)) {
+      setNumbersExtractedList([...numbersExtractedList, newNumber]);
     }
   };
-  console.log(numbersExtractedList);
 
   const resetGame = () => {
     setNumbersExtractedList([]);
@@ -71,7 +70,7 @@ export default function HomePage() {
                 type="button"
                 onClick={() => extractionNumber()}
                 className={
-                  "btn btn-warning extraction-btn" +
+                  "btn btn-warning fw-bold extraction-btn" +
                   (numbersExtractedList.length === nums ? " disabled" : "")
                 }
               >
@@ -80,13 +79,61 @@ export default function HomePage() {
             </div>
 
             <div className="mb-2">
+              {/* End Actual Game Button */}
               <button
                 type="button"
-                onClick={() => resetGame()}
-                className="btn btn-danger"
+                className="btn btn-danger fw-bold"
+                data-bs-toggle="modal"
+                data-bs-target="#endGame"
               >
-                Termina gioco
+                Termina Gioco
               </button>
+
+              {/* modal for confirm end game */}
+              <div
+                className="modal fade"
+                id="endGame"
+                tabIndex="-1"
+                aria-labelledby="endGameLabel"
+                aria-hidden="true"
+              >
+                <div className="modal-dialog">
+                  <div className="modal-content">
+                    <div className="modal-header">
+                      {/* modal title */}
+                      <h1 className="modal-title fs-5" id="endGameLabel">
+                        Termina Partita
+                      </h1>
+                      <button
+                        type="button"
+                        className="btn-close"
+                        data-bs-dismiss="modal"
+                        aria-label="Close"
+                      ></button>
+                    </div>
+                    <div className="modal-body">
+                      Vuoi terminare la partita corrente?
+                    </div>
+                    <div className="modal-footer">
+                      <button
+                        type="button"
+                        className="btn btn-outline-secondary"
+                        data-bs-dismiss="modal"
+                      >
+                        Close
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => resetGame()}
+                        className="btn btn-danger"
+                        data-bs-dismiss="modal"
+                      >
+                        Termina Partita
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
