@@ -1,0 +1,51 @@
+.wrapper {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+body {
+  background-color: #17a494;
+}
+
+main {
+  flex-grow: 1;
+}
+
+h1 {
+  font-family: "Gochi Hand", serif;
+  font-style: normal;
+}
+
+.badge {
+  min-width: 64px;
+}
+
+.number-list {
+  padding: 1rem;
+
+  background-color: white;
+  box-shadow: -3px 3px 0px 0px #c6c8c3;
+}
+
+[data-num-extracted="true"] {
+  background-color: #f68ca0;
+  box-shadow: -3px 3px 0px 0px #c82029;
+}
+
+.number-extracted {
+  display: inline-block;
+  height: 80px;
+  width: 80px;
+  padding: 0;
+  line-height: 80px;
+}
+
+hr {
+  opacity: 100%;
+  border-top: 1px solid white;
+}
+
+.extraction-btn {
+  color: white;
+}
